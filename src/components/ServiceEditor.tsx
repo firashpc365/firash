@@ -9,7 +9,7 @@ import { SubItemEditor } from './features/SubItemEditor';
 import { AISubItemSuggester } from './features/AISubItemSuggester';
 import { getAIServiceAssistance, generateSubItemsForService, QuotaExceededError, generateImageForPrompt } from '../services/geminiService';
 import type { ServiceItem, AIInteraction, ServiceStatus, PricingType, SubItem, DataSource, AppSettings, ServiceVariant } from '../../types';
-import { SparkleIcon, TrashIcon, EditIcon, PlusIcon, LockClosedIcon, LockOpenIcon } from './common/icons';
+import { SparkleIcon, TrashIcon, EditIcon, PlusIcon, LockClosedIcon, LockOpenIcon, EyeIcon, DocumentTextIcon } from './common/icons';
 import { ConfirmationModal } from './common/ConfirmationModal';
 
 interface ServiceEditorProps {
@@ -145,18 +145,14 @@ export const ServiceEditor: React.FC<ServiceEditorProps> = ({ service, allServic
                 const uniqueCategories: string[] = Array.from(new Set(allServices.map((s: ServiceItem) => s.category)));
                 const { result, fullPrompt, source } = await getAIServiceAssistance(type, localService, settings, uniqueCategories);
                 
-                if (source === 'mock_data') {
-                    onAIFallback(true);
-                } else {
-                    onAIFallback(false);
-                }
+                // Assume AI source if no error
+                const sourceToSet: DataSource = 'ai';
+                onAIFallback(false);
 
                 onLogAIInteraction({
                     feature: `service_${type}` as any, promptSummary: `Generate ${type} for ${localService.name}`,
                     fullPrompt, response: JSON.stringify(result)
                 });
-                
-                const sourceToSet: DataSource = source === 'mock_data' ? 'mock_data' : 'ai';
                 
                 if (type === 'image_prompt') {
                     const imagePrompt = result as string;

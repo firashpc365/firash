@@ -174,7 +174,7 @@ export const SupplierManagement: React.FC<SupplierManagementProps> = ({
             if (analysis.extraction_status === 'FAILED') finalStatus = 'Rejected';
 
             // Attempt to auto-match supplier if not provided or inferred
-            let supplierId = 'sup-001'; // Default fallback
+            let supplierId = ''; // Default empty if not matched
             if (analysis.extracted_details.supplier_name) {
                 const matchedSupplier = suppliers.find(s => s.name.toLowerCase().includes(analysis.extracted_details.supplier_name.toLowerCase()));
                 if (matchedSupplier) supplierId = matchedSupplier.supplier_id;

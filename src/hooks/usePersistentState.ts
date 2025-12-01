@@ -74,6 +74,9 @@ const mergeState = (userData: any, defaultData: any) => {
     merged.events = Array.isArray(userData?.events) ? userData.events : [];
     merged.clients = Array.isArray(userData?.clients) ? userData.clients : [];
     merged.users = Array.isArray(userData?.users) ? userData.users : defaultData.users;
+    merged.rfqs = Array.isArray(userData?.rfqs) ? userData.rfqs : [];
+    merged.suppliers = Array.isArray(userData?.suppliers) ? userData.suppliers : [];
+    merged.procurementDocuments = Array.isArray(userData?.procurementDocuments) ? userData.procurementDocuments : [];
 
     return merged;
 };
